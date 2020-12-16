@@ -1,0 +1,19 @@
+.is-loading {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: !important 100px;
+  height: !important 100px;
+  -webkit-animation-name: spin;
+          animation-name: spin;
+  -webkit-animation-duration: 2000ms;
+          animation-duration: 2000ms;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+
+
+/*# sourceMappingURL=index.css.map*/

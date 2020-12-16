@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@wordpress/scripts": "^12.5.0"
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.13",
+    "@wordpress/scripts": "^12.5.0",
+    "axios": "^0.21.0"
   }
 }
