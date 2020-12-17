@@ -49,8 +49,10 @@ function DateFilter({
       let currentMonthNumber = currentMonth;
       let year = 1900;
       if (monthNumber < currentMonthNumber) {
+        console.log(monthNumber, currentMonthNumber);
         year += currentYear + 1;
       } else {
+        // console.log(monthNumber, currentMonthNumber);
         year += currentYear;
       }
       let object = {
@@ -73,13 +75,41 @@ function DateFilter({
 
   function changeSelectedCategory(temp_e) {
     console.log("changed Category");
-    const eventId = temp_e.target.id;
-    console.log(eventId);
-    setDateFilterId(eventId);
+    const eventDataFilterId = temp_e.target.value;
+    console.log(temp_e.target);
+
+    console.log(eventDataFilterId);
+
+    setDateFilterId(eventDataFilterId);
   }
 
   return (
     <>
+      <div className="d-md-none pr-12px border border-dark-primary">
+        <select
+          name="categories"
+          id="cat-select"
+          className="fs-short-3 ff-semibold"
+          onChange={(e) => {
+            changeSelectedCategory(e);
+          }}
+        >
+          {dateFilter.map((object, index) => {
+            return (
+              <option
+                key={index + 1000}
+                data-filter-id={object.id}
+                data-month={index}
+                value={object.id}
+                defaultValue={object.checked}
+              >
+                {`${object.name} ${object.year}`}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+
       <ul className="cat-filters d-md-flex mw-550px flex-wrap justify-content-center align-items-center d-none">
         {dateFilter.map((object, index) => {
           return (
@@ -89,12 +119,11 @@ function DateFilter({
             >
               <input
                 name="cat"
-                id={object.id}
                 className="position-absolute top-0 bottom-0 left-0 right-0 w-100 h-100"
                 type="radio"
-                value="all"
+                value={object.id}
                 data-month={index}
-                data-year="2021 par exemple"
+                data-filter-id={object.id}
                 defaultChecked={object.checked}
                 onClick={(e) => {
                   changeSelectedCategory(e);

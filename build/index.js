@@ -13620,12 +13620,12 @@ function App() {
       currentDay = _useState4[0],
       setCurrentDay = _useState4[1];
 
-  var _useState5 = useState(new Date().getMonth() + 1),
+  var _useState5 = useState(new Date(2021, 10).getMonth()),
       _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState5, 2),
       currentMonth = _useState6[0],
       setCurrentMonth = _useState6[1];
 
-  var _useState7 = useState(new Date().getYear()),
+  var _useState7 = useState(new Date(2021, 3, 15).getYear()),
       _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState7, 2),
       currentYear = _useState8[0],
       setCurrentYear = _useState8[1];
@@ -13740,8 +13740,10 @@ function DateFilter(_ref) {
       var year = 1900;
 
       if (monthNumber < currentMonthNumber) {
+        console.log(monthNumber, currentMonthNumber);
         year += currentYear + 1;
       } else {
+        // console.log(monthNumber, currentMonthNumber);
         year += currentYear;
       }
 
@@ -13764,12 +13766,30 @@ function DateFilter(_ref) {
 
   function changeSelectedCategory(temp_e) {
     console.log("changed Category");
-    var eventId = temp_e.target.id;
-    console.log(eventId);
-    setDateFilterId(eventId);
+    var eventDataFilterId = temp_e.target.value;
+    console.log(temp_e.target);
+    console.log(eventDataFilterId);
+    setDateFilterId(eventDataFilterId);
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("ul", {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "d-md-none pr-12px border border-dark-primary"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("select", {
+    name: "categories",
+    id: "cat-select",
+    className: "fs-short-3 ff-semibold",
+    onChange: function onChange(e) {
+      changeSelectedCategory(e);
+    }
+  }, dateFilter.map(function (object, index) {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("option", {
+      key: index + 1000,
+      "data-filter-id": object.id,
+      "data-month": index,
+      value: object.id,
+      defaultValue: object.checked
+    }, "".concat(object.name, " ").concat(object.year));
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("ul", {
     className: "cat-filters d-md-flex mw-550px flex-wrap justify-content-center align-items-center d-none"
   }, dateFilter.map(function (object, index) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("li", {
@@ -13777,12 +13797,11 @@ function DateFilter(_ref) {
       className: "".concat(index == 0 ? "mx-16px" : "", " position-relative")
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("input", {
       name: "cat",
-      id: object.id,
       className: "position-absolute top-0 bottom-0 left-0 right-0 w-100 h-100",
       type: "radio",
-      value: "all",
+      value: object.id,
       "data-month": index,
-      "data-year": "2021 par exemple",
+      "data-filter-id": object.id,
       defaultChecked: object.checked,
       onClick: function onClick(e) {
         changeSelectedCategory(e);

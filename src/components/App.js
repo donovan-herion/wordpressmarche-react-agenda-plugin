@@ -7,8 +7,12 @@ const { useState, useEffect } = wp.element;
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentDay, setCurrentDay] = useState(new Date().getDate());
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
-  const [currentYear, setCurrentYear] = useState(new Date().getYear());
+  const [currentMonth, setCurrentMonth] = useState(
+    new Date(2021, 10).getMonth()
+  );
+  const [currentYear, setCurrentYear] = useState(
+    new Date(2021, 3, 15).getYear()
+  );
   const [dateFilter, setDateFilter] = useState([]);
   const [dateFilterId, setDateFilterId] = useState();
   const [events, setEvents] = useState([]);
