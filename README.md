@@ -10,7 +10,7 @@ Clone this repo into the mu-plugins folder of your wordpress configuration.
 git clone git@github.com:donovan-herion/wordpressmarche-react-agenda-plugin.git
 ```
 
-Install all required packages by running
+Install all required packages by running the following command
 
 ```bash
 npm install
