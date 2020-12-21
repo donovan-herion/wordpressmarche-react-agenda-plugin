@@ -13839,26 +13839,25 @@ function DateFilter(_ref) {
       var monthName = monthsNames[index];
       var monthNumber = monthsNumbers[index];
       var currentMonthNumber = currentMonth;
+      var id = index + 1 < 10 ? "0".concat(index + 1) : index + 1;
       var year = 1900;
 
       if (monthNumber < currentMonthNumber) {
         console.log(monthNumber, currentMonthNumber);
         year += currentYear + 1;
       } else {
-        // console.log(monthNumber, currentMonthNumber);
         year += currentYear;
       }
 
       var object = {
         name: monthName,
-        id: index + 1,
+        id: id,
         month: monthNumber,
         year: year,
         checked: false
       };
       arrayOfObject.push(object);
-    }); // console.log(arrayOfObject);
-
+    });
     setDateFilter(arrayOfObject);
   };
 
@@ -13867,13 +13866,9 @@ function DateFilter(_ref) {
   }, []);
 
   function changeSelectedCategory(temp_e) {
-    console.log("changed Category");
-    var eventDataFilterId = temp_e.target.value.split("|")[0]; // console.log(temp_e.target);
-    // console.log(eventDataFilterId);
-
+    var eventDataFilterId = temp_e.target.value.split("|")[0];
     setDateFilterId(eventDataFilterId);
     var isBetweenDateValue = temp_e.target.value.split("|")[1];
-    console.log(isBetweenDateValue);
     setIsBetweenDate(isBetweenDateValue);
   }
 
@@ -13889,8 +13884,6 @@ function DateFilter(_ref) {
   }, dateFilter.map(function (object, index) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("option", {
       key: index + 1000,
-      "data-filter-id": object.id,
-      "data-month": index,
       value: "".concat(object.id, "|").concat(object.year, "-").concat(object.month, "-01"),
       defaultValue: object.checked
     }, "".concat(object.name, " ").concat(object.year));
@@ -13898,15 +13891,13 @@ function DateFilter(_ref) {
     className: "cat-filters d-md-flex mw-550px flex-wrap justify-content-center align-items-center d-none"
   }, dateFilter.map(function (object, index) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("li", {
-      key: index,
+      key: index + 10000,
       className: "".concat(index == 0 ? "mx-16px" : "", " position-relative")
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("input", {
       name: "cat",
       className: "position-absolute top-0 bottom-0 left-0 right-0 w-100 h-100",
       type: "radio",
       value: "".concat(object.id, "|").concat(object.year, "-").concat(object.month, "-01"),
-      "data-month": index,
-      "data-filter-id": object.id,
       defaultChecked: object.checked,
       onClick: function onClick(e) {
         changeSelectedCategory(e);
@@ -13940,12 +13931,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _loading_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./loading.css */ "./src/components/loading.css");
-/* harmony import */ var _loading_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_loading_css__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var dayjs_plugin_isBetween__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! dayjs/plugin/isBetween */ "./node_modules/dayjs/plugin/isBetween.js");
-/* harmony import */ var dayjs_plugin_isBetween__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(dayjs_plugin_isBetween__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var dayjs_plugin_isBetween__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! dayjs/plugin/isBetween */ "./node_modules/dayjs/plugin/isBetween.js");
+/* harmony import */ var dayjs_plugin_isBetween__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(dayjs_plugin_isBetween__WEBPACK_IMPORTED_MODULE_7__);
 
 
 
@@ -13954,8 +13943,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-dayjs__WEBPACK_IMPORTED_MODULE_7___default.a.extend(dayjs_plugin_isBetween__WEBPACK_IMPORTED_MODULE_8___default.a);
 var useEffect = wp.element.useEffect;
 
 function Events(_ref) {
@@ -13983,27 +13970,28 @@ function Events(_ref) {
 
   useEffect(function () {
     getEventsData();
-  }, []);
+  }, []); //Filters Event
+
   useEffect(function () {
     if (dateFilterId !== undefined) {
       if (dateFilterId == 0) {
         setFilteredEvents(events);
       } else {
-        var matchingDateFilter = dateFilter.find(function (object) {
-          return object.id == dateFilterId;
-        });
+        //matches all event with starting MONTH date == dateFilterId
         var matchingEvents = events.filter(function (object) {
-          // console.log(object.month, month);
-          return object.month == matchingDateFilter.month;
-        }); // Check if date is between
+          return object.month == dateFilterId;
+        }); //The selected category has a starting month value that is stored in isBetweenDate
+        //The isBetweenDate is used to check if an event occurs between the starting and ending date
+        //If true adds the event to an array that is merged with the first array
 
-        dayjs__WEBPACK_IMPORTED_MODULE_7___default.a.extend(dayjs_plugin_isBetween__WEBPACK_IMPORTED_MODULE_8___default.a);
+        dayjs__WEBPACK_IMPORTED_MODULE_6___default.a.extend(dayjs_plugin_isBetween__WEBPACK_IMPORTED_MODULE_7___default.a); //extends isbetween function from dayjs
+
         var isBetweenEvents = events.filter(function (object) {
           var startingDate = object.date_deb;
           startingDate = startingDate.split("/").reverse().join("-");
           var endingDate = object.date_fin;
           endingDate = endingDate.split("/").reverse().join("-");
-          return dayjs__WEBPACK_IMPORTED_MODULE_7___default()(isBetweenDate).isBetween(startingDate, endingDate, null, []);
+          return dayjs__WEBPACK_IMPORTED_MODULE_6___default()(isBetweenDate).isBetween(startingDate, endingDate, null, []);
         });
         setFilteredEvents([].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(matchingEvents), _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(isBetweenEvents)));
       }
@@ -14091,17 +14079,6 @@ function Top() {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Top);
-
-/***/ }),
-
-/***/ "./src/components/loading.css":
-/*!************************************!*\
-  !*** ./src/components/loading.css ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 

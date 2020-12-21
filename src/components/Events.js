@@ -2,10 +2,8 @@ import axios from "./Axios";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
-import "./loading.css";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-dayjs.extend(isBetween);
 
 const { useEffect } = wp.element;
 
@@ -37,22 +35,22 @@ function Events({
     getEventsData();
   }, []);
 
+  //Filters Event
   useEffect(() => {
     if (dateFilterId !== undefined) {
       if (dateFilterId == 0) {
         setFilteredEvents(events);
       } else {
-        const matchingDateFilter = dateFilter.find((object) => {
-          return object.id == dateFilterId;
-        });
-
+        //matches all event with starting MONTH date == dateFilterId
         let matchingEvents = events.filter((object) => {
-          // console.log(object.month, month);
-          return object.month == matchingDateFilter.month;
+          return object.month == dateFilterId;
         });
 
-        // Check if date is between
-        dayjs.extend(isBetween);
+        //The selected category has a starting month value that is stored in isBetweenDate
+        //The isBetweenDate is used to check if an event occurs between the starting and ending date
+        //If true adds the event to an array that is merged with the first array
+
+        dayjs.extend(isBetween); //extends isbetween function from dayjs
 
         let isBetweenEvents = events.filter((object) => {
           let startingDate = object.date_deb;
@@ -76,12 +74,14 @@ function Events({
   useEffect(() => {
     setEvents([1, 2, 3, 4, 5]);
   }, []);
+
   let classCarte1 =
     "1 object-card oc-event col-md-6 px-md-4px col-lg-4 px-lg-8px";
   let classCarte2_3 =
     "2 3 object-card oc-event pt-8px pt-md-0 col-md-6 px-md-4px col-lg-4 px-lg-8px";
   let classCarte456789 =
     "4 5 6 7 object-card oc-event pt-8px col-md-6 px-md-4px col-lg-4 pt-lg-16px px-lg-8px";
+
   if (isLoading == true) {
     return (
       <div style={{ marginTop: "5vh", fontSize: "15px", color: "#487F89" }}>

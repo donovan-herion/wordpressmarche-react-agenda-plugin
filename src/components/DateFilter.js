@@ -48,17 +48,17 @@ function DateFilter({
       let monthName = monthsNames[index];
       let monthNumber = monthsNumbers[index];
       let currentMonthNumber = currentMonth;
+      let id = index + 1 < 10 ? `0${index + 1}` : index + 1;
       let year = 1900;
       if (monthNumber < currentMonthNumber) {
         console.log(monthNumber, currentMonthNumber);
         year += currentYear + 1;
       } else {
-        // console.log(monthNumber, currentMonthNumber);
         year += currentYear;
       }
       let object = {
         name: monthName,
-        id: index + 1,
+        id: id,
         month: monthNumber,
         year: year,
         checked: false,
@@ -66,7 +66,6 @@ function DateFilter({
       arrayOfObject.push(object);
     });
 
-    // console.log(arrayOfObject);
     setDateFilter(arrayOfObject);
   };
 
@@ -75,16 +74,10 @@ function DateFilter({
   }, []);
 
   function changeSelectedCategory(temp_e) {
-    console.log("changed Category");
     const eventDataFilterId = temp_e.target.value.split("|")[0];
-    // console.log(temp_e.target);
-
-    // console.log(eventDataFilterId);
-
     setDateFilterId(eventDataFilterId);
 
     const isBetweenDateValue = temp_e.target.value.split("|")[1];
-    console.log(isBetweenDateValue);
     setIsBetweenDate(isBetweenDateValue);
   }
 
@@ -103,8 +96,6 @@ function DateFilter({
             return (
               <option
                 key={index + 1000}
-                data-filter-id={object.id}
-                data-month={index}
                 value={`${object.id}|${object.year}-${object.month}-01`}
                 defaultValue={object.checked}
               >
@@ -119,7 +110,7 @@ function DateFilter({
         {dateFilter.map((object, index) => {
           return (
             <li
-              key={index}
+              key={index + 10000}
               className={`${index == 0 ? "mx-16px" : ""} position-relative`}
             >
               <input
@@ -127,8 +118,6 @@ function DateFilter({
                 className="position-absolute top-0 bottom-0 left-0 right-0 w-100 h-100"
                 type="radio"
                 value={`${object.id}|${object.year}-${object.month}-01`}
-                data-month={index}
-                data-filter-id={object.id}
                 defaultChecked={object.checked}
                 onClick={(e) => {
                   changeSelectedCategory(e);
