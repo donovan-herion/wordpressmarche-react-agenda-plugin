@@ -7,14 +7,11 @@ const { useState, useEffect } = wp.element;
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentDay, setCurrentDay] = useState(new Date().getDate());
-  const [currentMonth, setCurrentMonth] = useState(
-    new Date(2021, 10).getMonth()
-  );
-  const [currentYear, setCurrentYear] = useState(
-    new Date(2021, 3, 15).getYear()
-  );
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+  const [currentYear, setCurrentYear] = useState(new Date().getYear());
   const [dateFilter, setDateFilter] = useState([]);
   const [dateFilterId, setDateFilterId] = useState();
+  const [isBetweenDate, setIsBetweenDate] = useState();
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
 
@@ -35,6 +32,7 @@ function App() {
               currentDay={currentDay}
               currentMonth={currentMonth}
               currentYear={currentYear}
+              setIsBetweenDate={setIsBetweenDate}
             />
             <Events
               isLoading={isLoading}
@@ -45,6 +43,7 @@ function App() {
               setEvents={setEvents}
               filteredEvents={filteredEvents}
               setFilteredEvents={setFilteredEvents}
+              isBetweenDate={isBetweenDate}
             />
           </div>
         </div>

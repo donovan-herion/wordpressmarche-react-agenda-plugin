@@ -8,6 +8,7 @@ function DateFilter({
   setDateFilterId,
   currentMonth,
   currentYear,
+  setIsBetweenDate,
 }) {
   const fillDateFilter = () => {
     const monthsNames = [
@@ -75,12 +76,16 @@ function DateFilter({
 
   function changeSelectedCategory(temp_e) {
     console.log("changed Category");
-    const eventDataFilterId = temp_e.target.value;
-    console.log(temp_e.target);
+    const eventDataFilterId = temp_e.target.value.split("|")[0];
+    // console.log(temp_e.target);
 
-    console.log(eventDataFilterId);
+    // console.log(eventDataFilterId);
 
     setDateFilterId(eventDataFilterId);
+
+    const isBetweenDateValue = temp_e.target.value.split("|")[1];
+    console.log(isBetweenDateValue);
+    setIsBetweenDate(isBetweenDateValue);
   }
 
   return (
@@ -100,7 +105,7 @@ function DateFilter({
                 key={index + 1000}
                 data-filter-id={object.id}
                 data-month={index}
-                value={object.id}
+                value={`${object.id}|${object.year}-${object.month}-01`}
                 defaultValue={object.checked}
               >
                 {`${object.name} ${object.year}`}
@@ -121,7 +126,7 @@ function DateFilter({
                 name="cat"
                 className="position-absolute top-0 bottom-0 left-0 right-0 w-100 h-100"
                 type="radio"
-                value={object.id}
+                value={`${object.id}|${object.year}-${object.month}-01`}
                 data-month={index}
                 data-filter-id={object.id}
                 defaultChecked={object.checked}

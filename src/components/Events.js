@@ -3,6 +3,9 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
 import "./loading.css";
+import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+dayjs.extend(isBetween);
 
 const { useEffect } = wp.element;
 
@@ -15,6 +18,7 @@ function Events({
   setEvents,
   filteredEvents,
   setFilteredEvents,
+  isBetweenDate,
 }) {
   const getEventsData = () => {
     setIsLoading(true);
@@ -47,7 +51,24 @@ function Events({
           return object.month == matchingDateFilter.month;
         });
 
-        setFilteredEvents(matchingEvents);
+        // Check if date is between
+        dayjs.extend(isBetween);
+
+        let isBetweenEvents = events.filter((object) => {
+          let startingDate = object.date_deb;
+          startingDate = startingDate.split("/").reverse().join("-");
+          let endingDate = object.date_fin;
+          endingDate = endingDate.split("/").reverse().join("-");
+
+          return dayjs(isBetweenDate).isBetween(
+            startingDate,
+            endingDate,
+            null,
+            []
+          );
+        });
+
+        setFilteredEvents([...matchingEvents, ...isBetweenEvents]);
       }
     }
   }, [dateFilter, dateFilterId]);
@@ -88,6 +109,7 @@ function Events({
                     className="bg-img-size-hover-110"
                     style={{
                       backgroundImage: `url(${object.images})`,
+                      backgroundSize: "cover",
                     }}
                   >
                     <b className="d-block position-absolute top-0 bottom-0 left-0 right-0 bg-img-bgcolor-primary-0 bg-img-bgcolor-hover-primary-55 bg-img-transition-bgcolor"></b>
