@@ -1,4 +1,4 @@
-# React Category Plugin
+# React Agenda Plugin
 
 This plugin provides a filter for the agenda page that runs on a single page.
 
