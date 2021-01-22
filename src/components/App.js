@@ -6,15 +6,15 @@ const { useState, useEffect } = wp.element;
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
-  const [currentDay, setCurrentDay] = useState(new Date().getDate());
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1); // 0 based
   const [currentYear, setCurrentYear] = useState(new Date().getYear());
-  const [dateFilter, setDateFilter] = useState([]);
-  const [dateFilterId, setDateFilterId] = useState();
-  const [isBetweenDate, setIsBetweenDate] = useState();
+  const [dateSelector, setDateSelector] = useState([]);
+  const [dateSelectorValues, setDateSelectorValues] = useState();
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
 
+  // console.log("dateSelectorValues", dateSelectorValues);
+  // console.log("dateSelector", dateSelector);
   return (
     <>
       <section
@@ -26,24 +26,20 @@ function App() {
 
           <div className="px-0 d-md-flex flex-md-column d-ls-md-flex flex-ls-md-column pt-48px align-items-center">
             <DateFilter
-              dateFilter={dateFilter}
-              setDateFilter={setDateFilter}
-              setDateFilterId={setDateFilterId}
-              currentDay={currentDay}
+              dateSelector={dateSelector}
+              setDateSelector={setDateSelector}
+              setDateSelectorValues={setDateSelectorValues}
               currentMonth={currentMonth}
               currentYear={currentYear}
-              setIsBetweenDate={setIsBetweenDate}
             />
             <Events
               isLoading={isLoading}
               setIsLoading={setIsLoading}
-              dateFilter={dateFilter}
-              dateFilterId={dateFilterId}
+              dateSelectorValues={dateSelectorValues}
               events={events}
               setEvents={setEvents}
               filteredEvents={filteredEvents}
               setFilteredEvents={setFilteredEvents}
-              isBetweenDate={isBetweenDate}
             />
           </div>
         </div>

@@ -10,13 +10,11 @@ const { useEffect } = wp.element;
 function Events({
   isLoading,
   setIsLoading,
-  dateFilter,
-  dateFilterId,
   events,
   setEvents,
   filteredEvents,
   setFilteredEvents,
-  isBetweenDate,
+  dateSelectorValues,
 }) {
   const getEventsData = () => {
     setIsLoading(true);
@@ -25,6 +23,7 @@ function Events({
       .then((res) => {
         setEvents(res.data);
         setFilteredEvents(res.data);
+
         console.log(res.data);
         setIsLoading(false);
       })
@@ -35,53 +34,46 @@ function Events({
     getEventsData();
   }, []);
 
-  //Filters Event
+  //FilteringEvents once dateSelectorValues changes
   useEffect(() => {
-    if (dateFilterId !== undefined) {
-      if (dateFilterId == 0) {
-        setFilteredEvents(events);
-      } else {
-        //matches all event with starting MONTH date == dateFilterId
-        let matchingEvents = events.filter((object) => {
-          return object.month == dateFilterId;
-        });
+    filteredEvents = events.filter((event) => {
+      let selectorMonth = dateSelectorValues.split("|")[0];
+      let selectorYear = dateSelectorValues.split("|")[1];
+      let shouldStay = false;
 
-        //The selected category has a starting month value that is stored in isBetweenDate
-        //The isBetweenDate is used to check if an event occurs between the starting and ending date
-        //If true adds the event to an array that is merged with the first array
+      console.log(selectorMonth);
 
-        dayjs.extend(isBetween); //extends isbetween function from dayjs
-
-        let isBetweenEvents = events.filter((object) => {
-          let startingDate = object.date_deb;
+      if (selectorMonth !== "tout") {
+        event.dates.forEach((e) => {
+          let startingDate = e.date_deb;
           startingDate = startingDate.split("/").reverse().join("-");
-          let endingDate = object.date_fin;
+          startingDate = startingDate.slice(0, -2) + "01";
+          let endingDate = e.date_fin;
           endingDate = endingDate.split("/").reverse().join("-");
+          endingDate = endingDate.slice(0, -2) + "01";
 
-          return dayjs(isBetweenDate).isBetween(
-            startingDate,
-            endingDate,
-            null,
-            []
-          );
+          dayjs.extend(isBetween); //allows us to use isBetween function
+          if (
+            dayjs(`${selectorYear}-${selectorMonth}-01`).isBetween(
+              startingDate,
+              endingDate,
+              null,
+              "[]"
+            )
+          ) {
+            shouldStay = true;
+          }
         });
-
-        setFilteredEvents([...matchingEvents, ...isBetweenEvents]);
+      } else {
+        shouldStay = true;
       }
-    }
-  }, [dateFilter, dateFilterId]);
+      return shouldStay;
+    });
 
-  useEffect(() => {
-    setEvents([1, 2, 3, 4, 5]);
-  }, []);
+    setFilteredEvents(filteredEvents);
+  }, [dateSelectorValues]);
 
-  let classCarte1 =
-    "1 object-card oc-event col-md-6 px-md-4px col-lg-4 px-lg-8px";
-  let classCarte2_3 =
-    "2 3 object-card oc-event pt-8px pt-md-0 col-md-6 px-md-4px col-lg-4 px-lg-8px";
-  let classCarte456789 =
-    "4 5 6 7 object-card oc-event pt-8px col-md-6 px-md-4px col-lg-4 pt-lg-16px px-lg-8px";
-
+  //HTML OUTPUT
   if (isLoading == true) {
     return (
       <div style={{ marginTop: "5vh", fontSize: "15px", color: "#487F89" }}>
@@ -96,13 +88,7 @@ function Events({
             return (
               <li
                 key={`key ${index}`}
-                className={
-                  index == 0
-                    ? classCarte1
-                    : index == 2 || index == 1
-                    ? classCarte2_3
-                    : classCarte456789
-                }
+                className="object-card oc-event col-md-6 px-md-4px col-lg-4 px-lg-8px"
               >
                 <a href="#" className="bg-img">
                   <i
@@ -119,13 +105,13 @@ function Events({
                   </i>
                   <div>
                     <div className="col-3">
-                      <span>{object.day}</span>
-                      <span>{object.month}</span>
-                      <span>{object.year}</span>
+                      <span>{object.dates[0].day}</span>
+                      <span>{object.dates[0].month}</span>
+                      <span>{object.dates[0].year}</span>
                     </div>
 
                     <div className="col-9">
-                      <h3 maxlenght="0">{object.nom}</h3>
+                      <h3>{object.nom}</h3>
 
                       <small>{object.localite}</small>
 
