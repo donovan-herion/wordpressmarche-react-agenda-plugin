@@ -16,6 +16,13 @@ function Events({
   setFilteredEvents,
   dateSelectorValues,
 }) {
+  const indexedClass = [
+    "object-card oc-event col-md-6 px-md-4px col-lg-4 px-lg-8px",
+    "object-card oc-event pt-8px pt-md-0 col-md-6 px-md-4px col-lg-4 px-lg-8px",
+    "object-card oc-event pt-8px pt-lg-0 col-md-6 px-md-4px col-lg-4 px-lg-8px",
+    "object-card oc-event pt-8px col-md-6 px-md-4px col-lg-4 pt-lg-16px px-lg-8px",
+  ];
+
   const getEventsData = () => {
     setIsLoading(true);
     axios
@@ -83,14 +90,16 @@ function Events({
   } else {
     return (
       <>
-        <ul className="pt-24px pt-md-32px d-md-flex flex-md-wrap mx-md-n4px mx-lg-n8px">
+        <ul class="pt-24px pt-md-32px d-md-flex flex-md-wrap mx-md-n4px mx-lg-n8px object-cardsList">
           {filteredEvents.map((object, index) => {
             return (
               <li
                 key={`key ${index}`}
-                className="object-card oc-event col-md-6 px-md-4px col-lg-4 px-lg-8px"
+                className={
+                  indexedClass[index] ? indexedClass[index] : indexedClass[3]
+                }
               >
-                <a href="#" className="bg-img">
+                <a href={object.url} className="bg-img">
                   <i
                     className="bg-img-size-hover-110"
                     style={{
@@ -115,7 +124,9 @@ function Events({
 
                       <small>{object.localite}</small>
 
-                      <small>{object.date_affichage}</small>
+                      {object.dates.map((date) => {
+                        return <small>{date.date_affichage}</small>;
+                      })}
                     </div>
                   </div>
                 </a>

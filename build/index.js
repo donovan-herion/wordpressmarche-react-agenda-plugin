@@ -13674,9 +13674,9 @@ function App() {
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("section", {
     id: "content",
-    className: "pt-42px pb-36px pl-ls-42px overflow-ls-hidden overflow-md-hidden pl-ls-lg-0 pt-xl-66px pb-lg-66px mw-1440px mx-xl-auto w-100"
+    class: "pt-42px pb-36px pl-ls-42px overflow-ls-hidden overflow-md-hidden pl-ls-lg-0 pt-xl-66px pb-lg-66px mw-1440px mx-xl-auto w-100"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
-    className: "bg-white pt-24px px-24px position-relative d-md-flex px-xl-48px mx-xl-n30px justify-content-md-center flex-column"
+    class: "bg-white pt-24px px-24px position-relative d-md-flex px-xl-48px mx-xl-n30px justify-content-md-center flex-column"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_Top__WEBPACK_IMPORTED_MODULE_4__["default"], null), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", {
     className: "px-0 d-md-flex flex-md-column d-ls-md-flex flex-ls-md-column pt-48px align-items-center"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_DateFilter__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -13854,6 +13854,7 @@ function Events(_ref) {
       filteredEvents = _ref.filteredEvents,
       setFilteredEvents = _ref.setFilteredEvents,
       dateSelectorValues = _ref.dateSelectorValues;
+  var indexedClass = ["object-card oc-event col-md-6 px-md-4px col-lg-4 px-lg-8px", "object-card oc-event pt-8px pt-md-0 col-md-6 px-md-4px col-lg-4 px-lg-8px", "object-card oc-event pt-8px pt-lg-0 col-md-6 px-md-4px col-lg-4 px-lg-8px", "object-card oc-event pt-8px col-md-6 px-md-4px col-lg-4 pt-lg-16px px-lg-8px"];
 
   var getEventsData = function getEventsData() {
     setIsLoading(true);
@@ -13915,13 +13916,13 @@ function Events(_ref) {
     }));
   } else {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("ul", {
-      className: "pt-24px pt-md-32px d-md-flex flex-md-wrap mx-md-n4px mx-lg-n8px"
+      class: "pt-24px pt-md-32px d-md-flex flex-md-wrap mx-md-n4px mx-lg-n8px object-cardsList"
     }, filteredEvents.map(function (object, index) {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("li", {
         key: "key ".concat(index),
-        className: "object-card oc-event col-md-6 px-md-4px col-lg-4 px-lg-8px"
+        className: indexedClass[index] ? indexedClass[index] : indexedClass[3]
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
-        href: "#",
+        href: object.url,
         className: "bg-img"
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
         className: "bg-img-size-hover-110",
@@ -13937,7 +13938,9 @@ function Events(_ref) {
         className: "col-3"
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", null, object.dates[0].day), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", null, object.dates[0].month), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", null, object.dates[0].year)), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
         className: "col-9"
-      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h3", null, object.nom), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("small", null, object.localite), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("small", null, object.date_affichage)))));
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h3", null, object.nom), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("small", null, object.localite), object.dates.map(function (date) {
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("small", null, date.date_affichage);
+      })))));
     })));
   }
 }
