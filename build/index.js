@@ -13639,13 +13639,13 @@ function App() {
       isLoading = _useState2[0],
       setIsLoading = _useState2[1];
 
-  var _useState3 = useState(new Date().getMonth() + 1),
+  var _useState3 = useState(new Date("September 22, 2022").getMonth() + 1),
       _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState3, 2),
       currentMonth = _useState4[0],
       setCurrentMonth = _useState4[1]; // 0 based
 
 
-  var _useState5 = useState(new Date().getYear()),
+  var _useState5 = useState(new Date("September 22, 2022").getYear()),
       _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState5, 2),
       currentYear = _useState6[0],
       setCurrentYear = _useState6[1];
