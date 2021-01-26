@@ -5,7 +5,7 @@ import Top from "./Top";
 const { useState, useEffect } = wp.element;
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1); // 0 based
   const [currentYear, setCurrentYear] = useState(new Date().getYear());
   const [dateSelector, setDateSelector] = useState([]);

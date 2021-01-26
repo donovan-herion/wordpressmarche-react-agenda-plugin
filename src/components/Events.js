@@ -87,6 +87,16 @@ function Events({
         <FontAwesomeIcon size="3x" spin={true} icon={faRedo} />
       </div>
     );
+  } else if (filteredEvents.length == 0) {
+    return (
+      <>
+        <ul class="pt-24px pt-md-32px justify-content-center d-md-flex flex-md-wrap mx-md-n4px mx-lg-n8px object-cardsList">
+          <li class="alert alert-info d-block" role="alert">
+            aucun événement à afficher
+          </li>
+        </ul>
+      </>
+    );
   } else {
     return (
       <>

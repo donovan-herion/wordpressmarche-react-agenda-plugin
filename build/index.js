@@ -13634,18 +13634,18 @@ var _wp$element = wp.element,
     useEffect = _wp$element.useEffect;
 
 function App() {
-  var _useState = useState(false),
+  var _useState = useState(true),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
       isLoading = _useState2[0],
       setIsLoading = _useState2[1];
 
-  var _useState3 = useState(new Date("September 22, 2022").getMonth() + 1),
+  var _useState3 = useState(new Date().getMonth() + 1),
       _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState3, 2),
       currentMonth = _useState4[0],
       setCurrentMonth = _useState4[1]; // 0 based
 
 
-  var _useState5 = useState(new Date("September 22, 2022").getYear()),
+  var _useState5 = useState(new Date().getYear()),
       _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState5, 2),
       currentYear = _useState6[0],
       setCurrentYear = _useState6[1];
@@ -13914,6 +13914,13 @@ function Events(_ref) {
       spin: true,
       icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__["faRedo"]
     }));
+  } else if (filteredEvents.length == 0) {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("ul", {
+      class: "pt-24px pt-md-32px justify-content-center d-md-flex flex-md-wrap mx-md-n4px mx-lg-n8px object-cardsList"
+    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("li", {
+      class: "alert alert-info d-block",
+      role: "alert"
+    }, "aucun \xE9v\xE9nement \xE0 afficher")));
   } else {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("ul", {
       class: "pt-24px pt-md-32px d-md-flex flex-md-wrap mx-md-n4px mx-lg-n8px object-cardsList"
@@ -13967,7 +13974,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function Top() {
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
-    href: "index.html",
+    href: "https://new.marche.be/",
     className: "button lvl3 align-self-ls-md-start align-self-md-start position-relative right-0 right-hover-12px fs-short-2"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("i", {
     className: "fas fa-angle-left pr-8px d-ls-md-inline pr-md-12px fs-short-2 d-md-inline"
